@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APRIL & EDGE · Hussein April</title>
+  <!-- Font Awesome 6 (free) for clean icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Font for techy feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ----- GLOBAL RESET & VARIABLES ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #0a1a2b;
+      --primary-light: #132b40;
+      --accent: #00e0b8;          /* tech mint */
+      --accent-glow: rgba(0, 224, 184, 0.4);
+      --accent-soft: #b3f0e6;
+      --bg-dark: #07111c;
+      --card-bg: rgba(18, 34, 51, 0.75);
+      --text-light: #eef6ff;
+      --text-muted: #9ab0c7;
+      --shadow-tech: 0 30px 40px -20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 224, 184, 0.1);
+      --border-radius: 28px;
+      --transition: all 0.3s cubic-bezier(0.2, 0.8, 0.4, 1);
+    }
+
+    /* ----- TECH BACKGROUND WITH GRID & GLOW ----- */
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-light);
+      line-height: 1.5;
+      background-color: var(--bg-dark);
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* animated grid + particles */
+    .tech-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background-image: 
+        linear-gradient(rgba(0, 224, 184, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 224, 184, 0.03) 1px, transparent 1px);
+      background-size: 45px 45px;
+      animation: gridShift 30s linear infinite;
+    }
+
+    @keyframes gridShift {
+      0% { background-position: 0 0; }
+      100% { background-position: 45px 45px; }
+    }
+
+    /* floating particles / glow dots */
+    .glow-orb {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      filter: blur(60px);
+      z-index: -1;
+      opacity: 0.5;
+      pointer-events: none;
+      animation: float 20s infinite alternate ease-in-out;
+    }
+
+    .glow-orb.one {
+      top: -10%;
+      right: -5%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 224, 184, 0.18) 0%, transparent 70%);
+      animation-duration: 25s;
+    }
+
+    .glow-orb.two {
+      bottom: -10%;
+      left: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 150, 255, 0.12) 0%, transparent 70%);
+      animation-duration: 32s;
+      animation-delay: -5s;
+    }
+
+    .glow-orb.three {
+      top: 40%;
+      left: 40%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(180, 130, 255, 0.1) 0%, transparent 70%);
+      animation-duration: 18s;
+      animation-delay: -8s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 30px) scale(1.1); }
+    }
+
+    /* additional floating dots (tech particles) */
+    .particle {
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.4;
+      box-shadow: 0 0 15px var(--accent);
+      z-index: -1;
+      pointer-events: none;
+      animation: twinkle 8s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.1; transform: scale(0.8); }
+      100% { opacity: 0.7; transform: scale(1.4); }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 28px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ----- TYPOGRAPHY ----- */
+    h1, h2, h3 {
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ----- NAVIGATION (glass morph) ----- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0 16px;
+      flex-wrap: wrap;
+      background: rgba(7, 17, 28, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 80px;
+      padding: 16px 32px;
+      margin-top: 20px;
+      border: 1px solid rgba(0, 224, 184, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-light);
+      text-shadow: 0 0 15px rgba(0, 224, 184, 0.3);
+    }
+
+    .logo span {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 2.2rem;
+      line-height: 1;
+      margin-right: 2px;
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .logo small {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+      margin-left: 6px;
+      align-self: center;
+      border-left: 1.5px solid rgba(0, 224, 184, 0.5);
+      padding-left: 12px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+
+    .nav-links a {
+      font-size: 1rem;
+      transition: var(--transition);
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: var(--accent);
+      color: var(--accent);
+      text-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    /* ----- HERO SECTION ----- */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
+      padding: 60px 0 80px;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      flex: 1 1 380px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(0, 224, 184, 0.1);
+      color: var(--accent);
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      border: 1px solid rgba(0, 224, 184, 0.3);
+      box-shadow: 0 0 20px rgba(0, 224, 184, 0.15);
+      backdrop-filter: blur(5px);
+    }
+
+    .hero-content h1 {
+      font-size: 3.8rem;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 20px;
+      line-height: 1.1;
+      text-shadow: 0 0 30px rgba(0, 224, 184, 0.2);
+    }
+
+    .hero-content h1 .accent {
+      color: var(--accent);
+      font-weight: 500;
+      display: inline-block;
+      text-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    .hero-desc {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 36px;
+      font-weight: 400;
+      border-left: 4px solid var(--accent);
+      padding-left: 20px;
+      background: linear-gradient(to right, rgba(0, 224, 184, 0.08), transparent);
+      backdrop-filter: blur(5px);
+      border-radius: 0 20px 20px 0;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 34px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-dark);
+      box-shadow: 0 0 25px var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 0 45px var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: rgba(0, 224, 184, 0.4);
+      color: var(--text-light);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      background: rgba(0, 224, 184, 0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(0, 224, 184, 0.2);
+    }
+
+    /* ----- HERO VISUAL (tech card) ----- */
+    .hero-visual {
+      flex: 1 1 320px;
+      background: linear-gradient(145deg, rgba(18, 34, 51, 0.9), rgba(10, 22, 36, 0.9));
+      backdrop-filter: blur(12px);
+      border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%;
+      padding: 40px 30px;
+      box-shadow: var(--shadow-tech);
+      text-align: center;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid rgba(0, 224, 184, 0.2);
+      position: relative;
+      transition: var(--transition);
+      animation: morph 12s infinite alternate ease-in-out;
+    }
+
+    @keyframes morph {
+      0% { border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%; }
+      100% { border-radius: 60% 40% 70% 30% / 40% 60% 40% 60%; }
+    }
+
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, var(--accent), transparent 60%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .hero-visual i {
+      font-size: 3.8rem;
+      color: var(--accent);
+      background: rgba(0, 224, 184, 0.1);
+      padding: 22px;
+      border-radius: 50%;
+      margin-bottom: 18px;
+      box-shadow: 0 0 40px rgba(0, 224, 184, 0.3);
+      text-shadow: 0 0 30px var(--accent-glow);
+      border: 1px solid rgba(0, 224, 184, 0.3);
+    }
+
+    .hero-visual p {
+      font-weight: 500;
+      color: var(--accent-soft);
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .hero-visual small {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      display: block;
+      margin-top: 8px;
+      border-top: 1px dashed rgba(0, 224, 184, 0.4);
+      padding-top: 12px;
+      width: 80%;
+    }
+
+    /* ----- SECTION TITLES ----- */
+    .section-title {
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 70px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 4px;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 640px;
+      margin-bottom: 56px;
+    }
+
+    /* ----- SERVICES / CARDS (glass) ----- */
+    .services {
+      padding: 50px 0 80px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 28px;
+      margin-top: 20px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      padding: 38px 28px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.5);
+      transition: var(--transition);
+      border: 1px solid rgba(0, 224, 184, 0.15);
+      border-bottom: 3px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 0%, rgba(0, 224, 184, 0.08), transparent 70%);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 40px -18px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 224, 184, 0.1);
+      border-bottom-color: var(--accent);
+      border-color: rgba(0, 224, 184, 0.3);
+      background: rgba(18, 34, 51, 0.9);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      font-size: 2.4rem;
+      color: var(--accent);
+      margin-bottom: 24px;
+      background: rgba(0, 224, 184, 0.08);
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      transition: var(--transition);
+      border: 1px solid rgba(0, 224, 184, 0.2);
+      box-shadow: 0 0 20px rgba(0, 224, 184, 0.1);
+    }
+
+    .service-card:hover .service-icon {
+      background: var(--accent);
+      color: var(--bg-dark);
+      box-shadow: 0 0 35px var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+      color: var(--text-light);
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+
+    /* ----- ABOUT / QUOTE SECTION ----- */
+    .about-section {
+      display: flex;
+      gap: 50px;
+      align-items: center;
+      padding: 60px 0 80px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(0, 224, 184, 0.2);
+    }
+
+    .about-text {
+      flex: 1.2 1 300px;
+    }
+
+    .about-text h2 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: var(--text-light);
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    .about-signature {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .about-signature i {
+      font-size: 2.2rem;
+      color: var(--accent);
+      background: rgba(0, 224, 184, 0.1);
+      padding: 12px;
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(0, 224, 184, 0.2);
+      border: 1px solid rgba(0, 224, 184, 0.3);
+    }
+
+    .about-signature div {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .about-signature div small {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      display: block;
+    }
+
+    .about-quote {
+      flex: 0.8 1 250px;
+      background: linear-gradient(145deg, rgba(10, 26, 43, 0.9), rgba(18, 34, 51, 0.9));
+      backdrop-filter: blur(12px);
+      padding: 42px 32px;
+      border-radius: 40px 20px 40px 20px;
+      color: var(--text-light);
+      box-shadow: var(--shadow-tech);
+      position: relative;
+      border: 1px solid rgba(0, 224, 184, 0.2);
+    }
+
+    .about-quote i {
+      font-size: 2.5rem;
+      color: var(--accent);
+      opacity: 0.6;
+      margin-bottom: 12px;
+      text-shadow: 0 0 30px var(--accent-glow);
+    }
+
+    .about-quote blockquote {
+      font-size: 1.2rem;
+      font-weight: 400;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .about-quote footer {
+      margin-top: 24px;
+      font-weight: 600;
+      color: var(--accent-soft);
+      font-style: normal;
+      letter-spacing: 0.5px;
+    }
+
+    /* ----- FOOTER / CONTACT (glass) ----- */
+    .footer {
+      background: rgba(7, 17, 28, 0.8);
+      backdrop-filter: blur(15px);
+      color: var(--text-light);
+      border-radius: 60px 60px 0 0;
+      padding: 56px 0 32px;
+      margin-top: 40px;
+      border-top: 1px solid rgba(0, 224, 184, 0.2);
+    }
+
+    .footer .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-brand h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+
+    .footer-brand h2 span {
+      color: var(--accent);
+      text-shadow: 0 0 25px var(--accent-glow);
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      max-width: 280px;
+      font-size: 0.95rem;
+      margin-top: 14px;
+    }
+
+    .footer-contact h3 {
+      font-size: 1.2rem;
+      color: var(--text-light);
+      margin-bottom: 22px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .footer-contact p {
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    .footer-contact i {
+      width: 22px;
+      color: var(--accent);
+      font-size: 1.1rem;
+      text-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 48px;
+      margin-top: 20px;
+      border-top: 1px solid rgba(0, 224, 184, 0.1);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-bottom a {
+      color: var(--accent-soft);
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 800px) {
+      .navbar {
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px 20px;
+      }
+      .nav-links {
+        gap: 28px;
+      }
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+      .hero {
+        padding-bottom: 50px;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .about-quote {
+        padding: 32px 24px;
+      }
+      .footer .container {
+        flex-direction: column;
+        gap: 32px;
+      }
+      .glow-orb {
+        opacity: 0.25;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 0 18px;
+      }
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      .logo {
+        font-size: 1.6rem;
+      }
+      .logo span {
+        font-size: 1.9rem;
+      }
+      .nav-links {
+        gap: 18px;
+        font-size: 0.9rem;
+      }
+      .btn {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+      }
+      .hero-visual {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TECH BACKGROUND ELEMENTS -->
+  <div class="tech-bg"></div>
+  <div class="glow-orb one"></div>
+  <div class="glow-orb two"></div>
+  <div class="glow-orb three"></div>
+
+  <!-- floating tech particles -->
+  <div class="particle" style="top: 15%; left: 10%; animation-duration: 7s;"></div>
+  <div class="particle" style="top: 70%; left: 85%; animation-duration: 11s; animation-delay: 2s;"></div>
+  <div class="particle" style="top: 45%; left: 25%; animation-duration: 9s; animation-delay: 1s;"></div>
+  <div class="particle" style="top: 85%; left: 40%; animation-duration: 13s; animation-delay: 3s;"></div>
+  <div class="particle" style="top: 20%; left: 75%; animation-duration: 6s; animation-delay: 4s;"></div>
+  <div class="particle" style="top: 55%; left: 92%; animation-duration: 10s; animation-delay: 2s;"></div>
+  <div class="particle" style="top: 10%; left: 50%; animation-duration: 12s; animation-delay: 5s;"></div>
+  <div class="particle" style="top: 90%; left: 15%; animation-duration: 8s; animation-delay: 1s;"></div>
+
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+      <div class="logo">
+        <span>⧉</span> APRIL<span style="font-weight:300;">·</span>EDGE
+        <small>Hussein April</small>
+      </div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-microchip" style="margin-right: 8px;"></i> NEXT-GEN BUSINESS ADVISORY
+        </div>
+        <h1>
+          Hussein April<br>
+          <span class="accent">APRIL & EDGE</span>
+        </h1>
+        <div class="hero-desc">
+          Where strategic vision meets refined execution. We help ambitious leaders build lasting impact in a digital world.
+        </div>
+        <div class="btn-group">
+          <a href="#contact" class="btn btn
